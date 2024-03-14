@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../models/Categoria.php';
 
+//controlador para traer una categoria por su id
 if(isset($_GET['id'])) {
     $categoriaId = $_GET['id'];
     $categoria = new Categoria($categoriaId);

@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../models/Producto.php';
 
+//controlador para insertar un producto
 if(isset($_POST['code']) && isset($_POST['name']) && isset($_POST['category_id']) && isset($_POST['price'])) {
     $code = $_POST['code'];
     $name = $_POST['name'];

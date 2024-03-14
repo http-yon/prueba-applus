@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../models/Categoria.php';
 
+//controlador para insertar una categoria
 if(isset($_POST['nombreCategoria']) && isset($_POST['fechaCreacion']) && isset($_POST['fechaActualizacion'])) {
     $nombreCategoria = $_POST['nombreCategoria'];
     $fechaCreacion = $_POST['fechaCreacion'];

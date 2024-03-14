@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../models/Categoria.php';
 
+//controlador para editar una categoria
 if(isset($_POST['id']) && isset($_POST['nombreCategoria']) && isset($_POST['fechaCreacion']) && isset($_POST['fechaActualizacion'])) {
     $categoriaId = $_POST['id'];
     $nombreCategoria = $_POST['nombreCategoria'];

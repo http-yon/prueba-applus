@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../models/Producto.php';
 
+//controlador para borrar un producto
 if(isset($_POST['id'])) {
     $productoId = $_POST['id'];
     $producto = new Producto($productoId);

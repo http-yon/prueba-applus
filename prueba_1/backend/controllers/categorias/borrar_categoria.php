@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../models/Categoria.php';
 
+//controlador para borrar una categoria
 if(isset($_POST['id'])) {
     $categoriaId = $_POST['id'];
     $categoria = new Categoria($categoriaId);

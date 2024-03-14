@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/../../models/Producto.php';
 
+//controlador para editar un producto
 if(isset($_POST['id']) && isset($_POST['code']) && isset($_POST['name']) && isset($_POST['category_id']) && isset($_POST['price'])) {
     $productoId = $_POST['id'];
     $code = $_POST['code'];
