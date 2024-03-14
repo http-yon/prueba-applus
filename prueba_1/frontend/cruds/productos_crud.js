@@ -1,17 +1,16 @@
-$(document).ready(function() {
+$(document).ready(function () {
     // Obtener todos los productos
-    $(function() {
+    $(function () {
         $.ajax({
             url: '../backend/controllers/productos/obtener_productos.php',
             type: 'GET',
             dataType: 'json',
-            success: function(response) {
-                // Limpiar el contenido existente de la tabla
+            success: function (response) {
                 $("#tablaProductos tbody").empty();
-    
-                // Iterar sobre los datos recibidos y agregar filas a la tabla
-                $.each(response, function(index, producto) {
-                    var newRow = "<tr>" +
+
+                // Iterar en tabla
+                $.each(response, function (index, producto) {
+                    let newRow = "<tr>" +
                         "<th scope='row'>" + producto.id + "</th>" +
                         "<td>" + producto.code + "</td>" +
                         "<td>" + producto.name + "</td>" +
@@ -22,47 +21,96 @@ $(document).ready(function() {
                         "</tr>";
                     $("#tablaProductos tbody").append(newRow);
                 });
-    
-                // Agregar controlador de eventos click para los botones de eliminar
-                $(".eliminar-producto").click(function() {
-                    var idProducto = $(this).data('id');
+
+                //controlador de eventos
+                $(".eliminar-producto").click(function () {
+                    let idProducto = $(this).data('id');
                     confirmarEliminarProducto(idProducto);
                 });
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error(xhr.responseText);
-                // Manejar errores aquí si es necesario
             }
         });
     });
 
-
+    
+    //confirma eliminacion
     function confirmarEliminarProducto(idProducto) {
         if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
-            // Si el usuario confirma, llama a la función para eliminar el producto
             eliminarProducto(idProducto);
             window.location.reload();
         }
     }
 
 
-
-
-    // Borrar un producto por su ID
+    // eliminar un producto por su ID
     function eliminarProducto(idProducto) {
         $.ajax({
             url: '../backend/controllers/productos/borrar_producto.php',
             type: 'POST',
             data: { id: idProducto },
-            success: function(response) {
+            success: function (response) {
                 console.log(response);
-                // Actualizar la tabla u otra lógica necesaria después de eliminar
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error(xhr.responseText);
-                // Manejar errores aquí si es necesario
             }
         });
     }
+
+
+    //mostrar categorias en el select del modal
+    $(function () {
+        $.ajax({
+            url: '../backend/controllers/categorias/obtener_categorias.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+
+                let selectCategoria = $("#categoriaId");
+
+                $.each(response, function (index, categoria) {
+                    let option = $("<option>").attr("value", categoria.id).text(categoria.name);
+                    selectCategoria.append(option);
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    });
+
+
+    // Insertar nuevo producto
+    $("#insertarProductoModalBtn").click(function () {
+        let codigoProducto = $("#codigoProducto").val();
+        let nombreProducto = $("#nombreProducto").val();
+        let categoriaId = $("#categoriaId").val();
+        let precioProducto = $("#precioProducto").val();
+
+        if (codigoProducto !== "" && nombreProducto !== "" && categoriaId !== "" && precioProducto !== "") {
+            $.ajax({
+                url: '../backend/controllers/productos/insertar_producto.php',
+                type: 'POST',
+                data: {
+                    code: codigoProducto,
+                    name: nombreProducto,
+                    category_id: categoriaId,
+                    price: precioProducto
+                },
+                success: function (response) {
+                    console.log(response);
+                    alert("datos insertados correctamente")
+                    window.location.reload()
+                }
+            });
+        } else {
+            alert("Por favor, complete todos los campos.");
+        }
+    });
+
+
+
 
 });
