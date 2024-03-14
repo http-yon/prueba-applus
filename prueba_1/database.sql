@@ -21,3 +21,15 @@ CREATE TABLE Product (
     updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (category_id) REFERENCES Category(id)
 );
+
+-- Insertar datos en la tabla Category
+INSERT INTO Category (name) VALUES 
+    ('Electrónicos'),
+    ('Ropa'),
+    ('Hogar');
+
+-- Insertar datos en la tabla Product
+INSERT INTO Product (code, name, category_id, price) VALUES 
+    ('PROD001', 'Televisor LED 50 pulgadas', 1, 699.99),
+    ('PROD002', 'Camiseta manga corta', 2, 19.99),
+    ('PROD003', 'Sofá de cuero', 3, 899.99);
