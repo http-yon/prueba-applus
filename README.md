@@ -6,7 +6,7 @@
   - **CRUD** de Productos (prueba_1)
   - Sistema de **gestión** de Biblioteca (prueba_2)
 
-- Desarrollado con **PHP**, **MySQL** y **JQuery**
+- Desarrollado con **PHP**, **MySQL**, **JQuery** y **Bootstrap**
 - Mas detalles de su funcionamiento en los **Commits** y dentro del **código** 
 
 ---
