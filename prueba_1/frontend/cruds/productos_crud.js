@@ -17,7 +17,7 @@ $(document).ready(function () {
                         "<td>" + producto.category_id + "</td>" +
                         "<td>" + producto.price + "</td>" +
                         "<td><button type='button' class='btn btn-danger eliminar-producto' data-id='" + producto.id + "'>Eliminar</button></td>" +
-                        "<td><button type='button' class='btn btn-info'>Info</button></td>" +
+                        "<td><button type='button' class='btn btn-info'>Editar</button></td>" +
                         "</tr>";
                     $("#tablaProductos tbody").append(newRow);
                 });
@@ -34,7 +34,7 @@ $(document).ready(function () {
         });
     });
 
-    
+
     //confirma eliminacion
     function confirmarEliminarProducto(idProducto) {
         if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
