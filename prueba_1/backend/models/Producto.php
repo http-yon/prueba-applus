@@ -84,7 +84,9 @@ class Producto extends Conectar{
    //GET
    public function obtenerProductos(){
     try {
-        $stm = $this->db->prepare("SELECT * FROM Product");
+        $stm = $this->db->prepare("SELECT p.*, c.name as category_name 
+        FROM Product p 
+        JOIN Category c ON p.category_id = c.id");
         $stm->execute();
         return $stm->fetchAll();
     } catch (Exception $e) {

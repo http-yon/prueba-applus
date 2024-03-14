@@ -7,14 +7,13 @@ $(document).ready(function () {
             dataType: 'json',
             success: function (response) {
                 $("#tablaProductos tbody").empty();
-
                 // Iterar en tabla
                 $.each(response, function (index, producto) {
                     let newRow = "<tr>" +
                         "<th scope='row'>" + producto.id + "</th>" +
                         "<td>" + producto.code + "</td>" +
                         "<td>" + producto.name + "</td>" +
-                        "<td>" + producto.category_id + "</td>" +
+                        "<td>" + producto.category_name  + "</td>" +
                         "<td>" + producto.price + "</td>" +
                         "<td><button type='button' class='btn btn-danger eliminar-producto'data-id='" + producto.id + "'>Eliminar</button></td>" +
                         "<td><button type='button' class='btn btn-primary editar-producto' data-bs-toggle='modal' data-bs-target='#editarProductoModal' data-id='" + producto.id + "'>Editar Producto</button></td>" +
