@@ -1,0 +1,12 @@
+body {
+    padding: 20px;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.modal-body input,
+.modal-body select {
+    width: 100%;
+}
