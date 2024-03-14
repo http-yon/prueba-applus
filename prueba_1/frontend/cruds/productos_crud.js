@@ -16,13 +16,20 @@ $(document).ready(function () {
                         "<td>" + producto.name + "</td>" +
                         "<td>" + producto.category_id + "</td>" +
                         "<td>" + producto.price + "</td>" +
-                        "<td><button type='button' class='btn btn-danger eliminar-producto' data-id='" + producto.id + "'>Eliminar</button></td>" +
-                        "<td><button type='button' class='btn btn-info'>Editar</button></td>" +
-                        "</tr>";
+                        "<td><button type='button' class='btn btn-danger eliminar-producto'data-id='" + producto.id + "'>Eliminar</button></td>" +
+                        "<td><button type='button' class='btn btn-primary editar-producto' data-bs-toggle='modal' data-bs-target='#editarProductoModal' data-id='" + producto.id + "'>Editar Producto</button></td>" +
+                        "</tr>"
+
+
                     $("#tablaProductos tbody").append(newRow);
                 });
 
-                //controlador de eventos
+                $(".editar-producto").click(function () {
+                    let idProducto = $(this).data('id');
+                    cargarDatosProducto(idProducto);
+                    cargarCategorias();
+                });
+
                 $(".eliminar-producto").click(function () {
                     let idProducto = $(this).data('id');
                     confirmarEliminarProducto(idProducto);
@@ -33,6 +40,7 @@ $(document).ready(function () {
             }
         });
     });
+
 
 
     //confirma eliminacion
@@ -60,7 +68,7 @@ $(document).ready(function () {
     }
 
 
-    //mostrar categorias en el select del modal
+    //mostrar categorias en el modal POST
     $(function () {
         $.ajax({
             url: '../backend/controllers/categorias/obtener_categorias.php',
@@ -80,6 +88,86 @@ $(document).ready(function () {
             }
         });
     });
+
+    //mostrar categorias en el modal UPDATE
+    function cargarCategorias() {
+        $.ajax({
+            url: '../backend/controllers/categorias/obtener_categorias.php',
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                let selectCategoria = $("#editarCategoriaProducto");
+
+                selectCategoria.empty();
+
+                $.each(response, function (index, categoria) {
+                    let option = $("<option>").attr("value", categoria.id).text(categoria.name);
+                    selectCategoria.append(option);
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+
+    //obtener producto por id y poder valores en inputs del modal Update
+    //actualizar productos
+    function cargarDatosProducto(idProducto) {
+        $.ajax({
+            url: '../backend/controllers/productos/obtener_producto.php?id=' + idProducto,
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                $('#editarCodigoProducto').val(response[0].code);
+                $('#editarNombreProducto').val(response[0].name);
+                $('#editarPrecioProducto').val(response[0].price);
+
+                $("#guardarCambiosProducto").click(function () {
+                    // Obtener los datos del formulario
+                    let idProducto = $("#editarIdProducto").val();
+                    let code = $("#editarCodigoProducto").val();
+                    let name = $("#editarNombreProducto").val();
+                    let category_id = $("#editarCategoriaProducto").val();
+                    let price = $("#editarPrecioProducto").val();
+
+                    let producto = {
+                        id: response[0].id,
+                        code: code,
+                        name: name,
+                        category_id: category_id,
+                        price: price
+                    };
+
+                    $.ajax({
+                        url: '../backend/controllers/productos/editar_producto.php',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: producto,
+                        success: function (response) {
+                            if (response.mensaje) {
+                                alert("datos actualaizados correctamente")
+                                window.location.reload()
+
+                            } else if (response.error) {
+                                console.error(response.error);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                });
+
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+
+
+
 
 
     // Insertar nuevo producto
@@ -109,8 +197,6 @@ $(document).ready(function () {
             alert("Por favor, complete todos los campos.");
         }
     });
-
-
 
 
 });
