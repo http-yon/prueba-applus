@@ -129,7 +129,7 @@ class Producto extends Conectar{
         try {
             $stm = $this->db->prepare("UPDATE Product SET code = ?, name = ?, category_id = ?, price = ?, createdAt = ?, updatedAt = ? WHERE id = ?");
             $stm->execute([$this->codigoProducto, $this->nombreProducto, $this->categoria_id, $this->precioProducto, $this->createdAtProducto, $this->updatedAtProducto, $this->productoId]);
-            return $stm->fetchAll();
+            return true;
         } catch (Exception $e) {
             return $e->getMessage();
         }
